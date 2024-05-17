@@ -17,7 +17,7 @@ public class Main extends Application {
         stg = primaryStage;
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Falcon");
+        primaryStage.setTitle("pro ++");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
