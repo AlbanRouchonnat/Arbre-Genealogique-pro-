@@ -16,15 +16,17 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         stg = primaryStage;
         primaryStage.setResizable(false);
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("SignUP.fxml"));
         primaryStage.setTitle("pro ++");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 
     public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
-        stg.getScene().setRoot(pane);
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
+        stg.setTitle("pro ++");
+        stg.setScene(new Scene(root, 1500, 800));
+        stg.show();
     }
 
     public static void main(String[] args) {
