@@ -1,6 +1,0 @@
-[
-    {"_key":"4470","_id":"lien/4470","_rev":"_h3AngWi---","relation":"married", "from":"Alice", "to":"Bob"},
-    {"_key":"4536","_id":"lien/4536","_rev":"_h3AofXW---","relation":"parent", "from":"Alice", "to":"Charlie"},
-    {"_key":"4585","_id":"lien/4585","_rev":"_h3ApGIS---","relation":"parent", "from":"Bob", "to":"Charlie"},
-    {"_key":"4631","_id":"lien/4631","_rev":"_h3Apq9----","relation":"parent", "from":"Eve", "to":"Alice"}
-]
