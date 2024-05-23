@@ -1,0 +1,130 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Scanner;
+
+class Utilisateur {
+    private String id;
+    private String motDePasse;
+
+    public Utilisateur() {
+    }
+
+    public Utilisateur(String id, String motDePasse) {
+        this.id = id;
+        this.motDePasse = motDePasse;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
+    }
+}
+
+public class Main {
+    private static final String FICHIER_JSON = "utilisateurs.json";
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String choix;
+
+        do {
+            System.out.println("Que voulez-vous faire ?");
+            System.out.println("0 - Quitter le programme");
+            System.out.println("1 - S'inscrire");
+            System.out.println("2 - Se connecter");
+            System.out.println("3 - Admin");
+            choix = scanner.nextLine();
+
+            switch (choix) {
+                case "0":
+                    System.out.println("Vous avez fermé le programme");
+                    break;
+                case "1":
+                    inscrireUtilisateur();
+                    break;
+                case "2":
+                    // seConnecter();
+                    break;
+                case "3":
+                    // connecteAdmin();
+                    break;
+                default:
+                    System.out.println("Choix invalide, veuillez réessayer.");
+            }
+        } while (!choix.equals("0"));
+
+        scanner.close();
+    }
+
+    private static void inscrireUtilisateur() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Entrez votre identifiant : ");
+        String identifiant = scanner.nextLine();
+        System.out.print("Entrez votre mot de passe : ");
+        String motDePasse = scanner.nextLine();
+
+        try {
+            List<Utilisateur> utilisateurs = lireUtilisateurs();
+            if (utilisateurs.stream().anyMatch(u -> u.getId().equals(identifiant))) {
+                System.out.println("Cet identifiant existe déjà.");
+                return;
+            }
+
+            String motDePasseHache = hacherMotDePasse(motDePasse);
+            Utilisateur nouvelUtilisateur = new Utilisateur(identifiant, motDePasseHache);
+            utilisateurs.add(nouvelUtilisateur);
+            ecrireUtilisateurs(utilisateurs);
+
+            System.out.println("Inscription réussie !");
+        } catch (IOException | NoSuchAlgorithmException e) {
+            System.err.println("Erreur lors de l'inscription : " + e.getMessage());
+        }
+    }
+
+    private static List<Utilisateur> lireUtilisateurs() throws IOException {
+        File fichier = new File(FICHIER_JSON);
+        if (!fichier.exists()) {
+            return new ArrayList<>();
+        }
+
+        CollectionType listeType = objectMapper.getTypeFactory().constructCollectionType(List.class, Utilisateur.class);
+        return objectMapper.readValue(Paths.get(FICHIER_JSON).toFile(), listeType);
+    }
+
+    private static void ecrireUtilisateurs(List<Utilisateur> utilisateurs) throws IOException {
+        objectMapper.writeValue(new File(FICHIER_JSON), utilisateurs);
+    }
+
+    private static String hacherMotDePasse(String motDePasse) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = messageDigest.digest(motDePasse.getBytes());
+        StringBuilder hexString = new StringBuilder();
+
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+
+        return hexString.toString();
+    }
+}
