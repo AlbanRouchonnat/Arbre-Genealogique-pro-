@@ -1,4 +1,4 @@
-package skx.coding;
+package skx;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
