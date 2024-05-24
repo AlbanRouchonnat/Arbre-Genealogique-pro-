@@ -1,0 +1,65 @@
+[
+  {
+    "passWord": "pass123",
+    "firstName": "John",
+    "nationality": "American",
+    "socialSecurityNumber": "123-45-6789",
+    "name": "Doe",
+    "secretCode": "abc123",
+    "dateOfBirth": "1944-05-10"
+  },
+  {
+    "passWord": "pass456",
+    "firstName": "Jane",
+    "nationality": "British",
+    "socialSecurityNumber": "234-56-7890",
+    "name": "Smith",
+    "secretCode": "xyz456",
+    "dateOfBirth": "1954-07-22"
+  },
+  {
+    "passWord": "pass789",
+    "firstName": "Jean",
+    "nationality": "French",
+    "socialSecurityNumber": "99",
+    "name": "Dupont",
+    "secretCode": "qwe789",
+    "dateOfBirth": "1964-12-13"
+  },
+  {
+    "passWord": "a",
+    "firstName": "a",
+    "nationality": "a",
+    "socialSecurityNumber": "a",
+    "name": "a",
+    "secretCode": "ty",
+    "dateOfBirth": "2024-04-29"
+  },
+  {
+    "passWord": "efeee",
+    "firstName": "ga",
+    "nationality": "bv",
+    "socialSecurityNumber": "'''",
+    "name": "are",
+    "secretCode": "ty",
+    "dateOfBirth": "2024-05-09"
+  },
+  {
+    "passWord": "aze",
+    "firstName": "Rayane",
+    "nationality": "Marocaine",
+    "socialSecurityNumber": "aze",
+    "name": "Chafaqi",
+    "secretCode": "dfcb2768-58c3-497c-9c8a-92a9c8885cf1",
+    "dateOfBirth": "2024-05-09"
+  },
+  {
+    "passWord": "a",
+    "firstName": "a",
+    "nationality": "a",
+    "socialSecurityNumber": "a",
+    "name": "a",
+    "secretCode": "d81e0d1a-b526-429a-b373-b9262e13d84d",
+    "dateOfBirth": "2024-05-15"
+  }
+]

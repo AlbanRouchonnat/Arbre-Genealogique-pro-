@@ -38,6 +38,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
+            <Button fx:id="Home" layoutX="37.0" layoutY="329.0" mnemonicParsing="false" onAction="#goHome" style="-fx-background-color: #000;" text="Revenir a l'acceuil" textFill="WHITE" />
          </children>
       </AnchorPane>
    </left>

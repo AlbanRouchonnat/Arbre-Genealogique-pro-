@@ -3,24 +3,35 @@ package com.example.pro;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+
 import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class SignUpController {
 
     @FXML
-    private TextField ssnField;
+    private TextField socialSecurityNumberField;
 
     @FXML
-    private TextField nomField;
+    private PasswordField passwordField;
 
     @FXML
-    private TextField prenomField;
+    private TextField nameField;
 
     @FXML
-    private DatePicker dateNaissancePicker;
+    private TextField firstNameField;
 
     @FXML
-    private TextField nationaliteField;
+    private Label wrongSignUp;
+
+    @FXML
+    private DatePicker dateNaissancePicker; // Correspond à dateOfBirthField
+
+    @FXML
+    private TextField nationaliteField; // Correspond à nationalityField
 
     @FXML
     private Button ciButton;
@@ -46,20 +57,44 @@ public class SignUpController {
     }
 
     @FXML
-    private void handleSubmitButtonAction() {
+    private void handleSubmitButtonAction() throws IOException {
         if (validateFields() && carteIdentiteFile != null && photoFile != null) {
-            // Logique pour soumettre les données du formulaire et les fichiers
+            handleAddPerson();
             System.out.println("Form submitted successfully!");
         } else {
             System.out.println("Please fill all fields and select the files.");
+            wrongSignUp.setText("Please fill all fields and select the files.");
         }
     }
 
     private boolean validateFields() {
-        return !ssnField.getText().isEmpty() &&
-                !nomField.getText().isEmpty() &&
-                !prenomField.getText().isEmpty() &&
+        return !socialSecurityNumberField.getText().isEmpty() &&
+                !nameField.getText().isEmpty() &&
+                !firstNameField.getText().isEmpty() &&
                 dateNaissancePicker.getValue() != null &&
                 !nationaliteField.getText().isEmpty();
+    }
+
+    @FXML
+    private void goHome() throws IOException {
+        Main m = new Main();
+        m.changeScene("Home.fxml", 600, 400);
+    }
+
+    @FXML
+    private void handleAddPerson() throws IOException {
+        String socialSecurityNumber = socialSecurityNumberField.getText();
+        String name = nameField.getText();
+        String firstName = firstNameField.getText();
+        LocalDate dateOfBirth = dateNaissancePicker.getValue();
+        String nationality = nationaliteField.getText();
+        String secretCode = UUID.randomUUID().toString(); // Récupérer le secretCode
+        String password = passwordField.getText();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        String formattedDateOfBirth = dateOfBirth.format(formatter);
+
+        Main main = new Main();
+        main.addPerson(socialSecurityNumber, name, firstName, formattedDateOfBirth, nationality, secretCode, password);
     }
 }
