@@ -75,5 +75,32 @@
     "name": "qq",
     "secretCode": "f2f55f5c-780d-4a44-babb-192b95d9190b",
     "dateOfBirth": "2024-05-01"
+  },
+  {
+    "passWord": "aaaaa",
+    "firstName": "aude",
+    "nationality": "Française",
+    "socialSecurityNumber": "aaaaaaaa",
+    "name": "Souchon",
+    "secretCode": "128eaf9e-181a-4d03-92a7-48024f2d976e",
+    "dateOfBirth": "2024-05-14"
+  },
+  {
+    "passWord": "aaaaaaaaaaa",
+    "firstName": "eeee",
+    "nationality": "fce",
+    "socialSecurityNumber": "xz",
+    "name": "v\"bté'crxedz",
+    "secretCode": "08cb87b7-776f-4d9b-ba7a-2f9eb863d276",
+    "dateOfBirth": "2020-05-06"
+  },
+  {
+    "passWord": "tvr",
+    "firstName": "r&é\"",
+    "nationality": "rfd\"e",
+    "socialSecurityNumber": "véar",
+    "name": "crf&\"",
+    "secretCode": "012086fa-ab86-405d-ae83-bf357b641798",
+    "dateOfBirth": "2024-05-03"
   }
 ]

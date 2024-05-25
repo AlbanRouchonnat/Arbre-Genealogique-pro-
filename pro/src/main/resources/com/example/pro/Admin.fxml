@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pro.AdminController">
+    <children>
+        <TableView fx:id="personTable" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="firstNameColumn" prefWidth="100.0" text="First Name"/>
+                <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Last Name"/>
+                <TableColumn fx:id="nationalityColumn" prefWidth="100.0" text="Nationality"/>
+                <TableColumn fx:id="socialSecurityNumberColumn" prefWidth="150.0" text="SSN"/>
+                <TableColumn fx:id="dateOfBirthColumn" prefWidth="150.0" text="Date of Birth"/>
+            </columns>
+        </TableView>
+        <HBox layoutX="14.0" layoutY="420.0" spacing="10.0">
+            <children>
+                <Button fx:id="validateButton" mnemonicParsing="false" text="Validate" onAction="#handleValidate"/>
+                <Button fx:id="invalidateButton" mnemonicParsing="false" text="Invalidate" onAction="#handleInvalidate"/>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
