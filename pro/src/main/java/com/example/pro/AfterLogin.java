@@ -1,3 +1,4 @@
+
 package com.example.pro;
 import java.nio.file.Path;
 import java.util.List;
@@ -43,23 +44,21 @@ public class AfterLogin{
     public void initialize() {
         // Exemple de données pour l'utilisateur racine
         Map<String, String> rootUserData = new HashMap<>();
-        rootUserData.put("name", UserInfo.username);
-        rootUserData.put("firstName", "RootFirstName");
-        rootUserData.put("nationality", "RootNationality");
-        rootUserData.put("socialSecurityNumber", "RootSSN");
-        rootUserData.put("secretCode", "RootSecretCode");
-        rootUserData.put("dateOfBirth", "01/01/1970");
-        rootUserData.put("password", "RootPassword");
+        rootUserData.put("name", UserInfo.name);
+        rootUserData.put("firstName", UserInfo.firstname);
+        rootUserData.put("nationality", UserInfo.SSN);
+        rootUserData.put("socialSecurityNumber", UserInfo.nationality);
+        rootUserData.put("dateOfBirth", UserInfo.dateOfBirth);
 
         VBox rootMember = createPersonBox(rootUserData);
         rootMember.setLayoutX(500);
         rootMember.setLayoutY(300);
         familyTreePane.getChildren().add(rootMember);
-        memberNodes.put(UserInfo.username, rootMember);
+        memberNodes.put(UserInfo.firstname, rootMember);
     }
     private static final String JSON_FILE_PATH = "Link.json";
 
-   Main m=new Main();
+    Main m=new Main();
 
     @FXML
     private void handleAddChildAction() throws IOException {
@@ -67,7 +66,6 @@ public class AfterLogin{
             showAlert("No Selection", "Please select a family member to add a child.");
             return;
         }
-
 
         // Créer la boîte de dialogue
         Dialog<Map<String, String>> dialog = new Dialog<>();
@@ -107,27 +105,26 @@ public class AfterLogin{
         grid.add(nationalityField, 1, 2);
         grid.add(new Label("Social Security Number:"), 0, 3);
         grid.add(ssnField, 1, 3);
-        grid.add(new Label("Secret Code:"), 0, 4);
-        grid.add(secretCodeField, 1, 4);
-        grid.add(new Label("Date of Birth:"), 0, 5);
-        grid.add(dobField, 1, 5);
-        grid.add(new Label("Password:"), 0, 6);
-        grid.add(passwordField, 1, 6);
+        grid.add(new Label("Date of Birth:"), 0, 4);
+        grid.add(dobField, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
 
         // Convertir le résultat en une map de valeurs
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == okButtonType) {
+                if (nameField.getText().isEmpty() || firstNameField.getText().isEmpty() ||
+                        nationalityField.getText().isEmpty() || ssnField.getText().isEmpty() ||
+                        dobField.getText().isEmpty()) {
+                    showAlert("Invalid Input", "All fields must be filled out.");
+                    return null; // Pour garder la boîte de dialogue ouverte
+                }
                 Map<String, String> data = new HashMap<>();
                 data.put("name", nameField.getText());
                 data.put("firstName", firstNameField.getText());
                 data.put("nationality", nationalityField.getText());
                 data.put("socialSecurityNumber", ssnField.getText());
-                data.put("secretCode", secretCodeField.getText());
                 data.put("dateOfBirth", dobField.getText());
-                data.put("password", passwordField.getText());
-                m.writeLink(UserInfo.username,nameField.getText(),"child");
                 return data;
             }
             return null;
@@ -142,9 +139,10 @@ public class AfterLogin{
             drawLine(selectedMember, newChild);
             System.out.println("New child added: " + data.get("name"));
         });
-
-
+        m.writeLink(UserInfo.name, nameField.getText(), "child");
+        m.addPersonDirect(ssnField.getText(), nameField.getText(), firstNameField.getText(), dobField.getText(),  nationalityField.getText(), secretCodeField.getText(), passwordField.getText());
     }
+
 
     @FXML
     private void goHome(ActionEvent event) throws IOException {
@@ -197,26 +195,26 @@ public class AfterLogin{
         grid.add(nationalityField, 1, 2);
         grid.add(new Label("Social Security Number:"), 0, 3);
         grid.add(ssnField, 1, 3);
-        grid.add(new Label("Secret Code:"), 0, 4);
-        grid.add(secretCodeField, 1, 4);
-        grid.add(new Label("Date of Birth:"), 0, 5);
-        grid.add(dobField, 1, 5);
-        grid.add(new Label("Password:"), 0, 6);
-        grid.add(passwordField, 1, 6);
+        grid.add(new Label("Date of Birth:"), 0, 4);
+        grid.add(dobField, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
 
         // Convertir le résultat en une map de valeurs
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == okButtonType) {
+                if (nameField.getText().isEmpty() || firstNameField.getText().isEmpty() ||
+                        nationalityField.getText().isEmpty() || ssnField.getText().isEmpty() ||
+                        dobField.getText().isEmpty()) {
+                    showAlert("Invalid Input", "All fields must be filled out.");
+                    return null; // To keep the dialog openpass
+                }
                 Map<String, String> data = new HashMap<>();
                 data.put("name", nameField.getText());
                 data.put("firstName", firstNameField.getText());
                 data.put("nationality", nationalityField.getText());
                 data.put("socialSecurityNumber", ssnField.getText());
-                data.put("secretCode", secretCodeField.getText());
                 data.put("dateOfBirth", dobField.getText());
-                data.put("password", passwordField.getText());
                 return data;
             }
             return null;
@@ -230,10 +228,11 @@ public class AfterLogin{
             positionNodes(newParent, selectedMember);
             drawLine(newParent, selectedMember);
             System.out.println("New parent added: " + data.get("name"));
+            m.writeLink(UserInfo.name, data.get("name"), "parent");
+            m.addPersonDirect(ssnField.getText(), nameField.getText(), firstNameField.getText(), dobField.getText(),  nationalityField.getText(), secretCodeField.getText(), passwordField.getText());
         });
-        //System.out.println(UserInfo.username);
-        m.writeLink(UserInfo.username,nameField.getText(),"parent");
     }
+
 
 
     @FXML
@@ -243,20 +242,73 @@ public class AfterLogin{
             return;
         }
 
-        TextInputDialog dialog = new TextInputDialog();
+        // Créer la boîte de dialogue
+        Dialog<Map<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Edit Member");
-        dialog.setHeaderText("Edit the member's name");
-        dialog.setContentText("Please enter the new name:");
+        dialog.setHeaderText("Edit the member's information");
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            Text nameLabel = (Text) selectedMember.getChildren().get(0);
-            String oldName = nameLabel.getText();
-            nameLabel.setText(name);
-            memberNodes.remove(oldName);
-            memberNodes.put(name, selectedMember);
+        // Définir les boutons
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+
+        // Créer les champs de texte pour l'entrée utilisateur
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        // Extraire les informations actuelles du membre sélectionné
+        Label nameLabel = (Label) selectedMember.getChildren().get(0);
+        Label firstNameLabel = (Label) selectedMember.getChildren().get(1);
+        Label nationalityLabel = (Label) selectedMember.getChildren().get(2);
+        Label ssnLabel = (Label) selectedMember.getChildren().get(3);
+        Label dobLabel = (Label) selectedMember.getChildren().get(4);
+
+        TextField nameField = new TextField(nameLabel.getText().split(": ")[1]);
+        TextField firstNameField = new TextField(firstNameLabel.getText().split(": ")[1]);
+        TextField nationalityField = new TextField(nationalityLabel.getText().split(": ")[1]);
+        TextField ssnField = new TextField(ssnLabel.getText().split(": ")[1]);
+        TextField dobField = new TextField(dobLabel.getText().split(": ")[1]);
+
+        grid.add(new Label("First Name:"), 0, 1);
+        grid.add(firstNameField, 1, 1);
+        grid.add(new Label("Nationality:"), 0, 2);
+        grid.add(nationalityField, 1, 2);
+        grid.add(new Label("Social Security Number:"), 0, 3);
+        grid.add(ssnField, 1, 3);
+        grid.add(new Label("Date of Birth:"), 0, 4);
+        grid.add(dobField, 1, 4);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Convertir le résultat en une map de valeurs
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                Map<String, String> data = new HashMap<>();
+                //data.put("name", nameField.getText());
+                data.put("firstName", firstNameField.getText());
+                data.put("nationality", nationalityField.getText());
+                data.put("socialSecurityNumber", ssnField.getText());
+                data.put("dateOfBirth", dobField.getText());
+                return data;
+            }
+            return null;
         });
+        Optional<Map<String, String>> result = dialog.showAndWait();
+        result.ifPresent(data -> {
+            //nameLabel.setText("Name: " + data.get("name"));
+            firstNameLabel.setText("First Name: " + data.get("firstName"));
+            nationalityLabel.setText("Nationality: " + data.get("nationality"));
+            ssnLabel.setText("SSN: " + data.get("socialSecurityNumber"));
+            dobLabel.setText("Date of Birth: " + data.get("dateOfBirth"));
+
+            String oldName = nameLabel.getText().split(": ")[1];
+            memberNodes.remove(oldName);
+            memberNodes.put(data.get("name"), selectedMember);
+        });
+        m.editMember(nameField.getText(),  firstNameField.getText(), nationalityField.getText(),dobField.getText(),ssnField.getText() );
     }
+
 
     @FXML
     private void handleRemoveMemberAction() {
@@ -264,7 +316,9 @@ public class AfterLogin{
             showAlert("No Selection", "Please select a family member to remove.");
             return;
         }
-
+        Label nameLabel = (Label) selectedMember.getChildren().get(0);
+        TextField nameField = new TextField(nameLabel.getText().split(": ")[1]);
+        m.suppPerson(nameField.getText());
         familyTreePane.getChildren().remove(selectedMember);
         memberNodes.values().remove(selectedMember);
         selectedMember = null;
@@ -277,10 +331,10 @@ public class AfterLogin{
         Label firstNameLabel = new Label("First Name: " + data.get("firstName"));
         Label nationalityLabel = new Label("Nationality: " + data.get("nationality"));
         Label ssnLabel = new Label("SSN: " + data.get("socialSecurityNumber"));
-        Label secretCodeLabel = new Label("Secret Code: " + data.get("secretCode"));
+        //Label secretCodeLabel = new Label("Secret Code: " + data.get("secretCode"));
         Label dobLabel = new Label("Date of Birth: " + data.get("dateOfBirth"));
-        Label passwordLabel = new Label("Password: " + data.get("password"));
-        personBox.getChildren().addAll(nameLabel, firstNameLabel, nationalityLabel, ssnLabel, secretCodeLabel, dobLabel, passwordLabel);
+        //Label passwordLabel = new Label("Password: " + data.get("password"));
+        personBox.getChildren().addAll(nameLabel, firstNameLabel, nationalityLabel, ssnLabel, dobLabel);
         personBox.setStyle("-fx-border-color: black; -fx-padding: 10;");
         personBox.setOnMouseClicked(event -> selectedMember = personBox);
         return personBox;
