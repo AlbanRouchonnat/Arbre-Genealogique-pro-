@@ -1,45 +1,42 @@
 [
   {
-    "from": "Alice",
-    "to": "Bob",
-    "relation": "married"
-  },
-  {
-    "from": "Alice",
-    "to": "Charlie",
-    "relation": "parent"
-  },
-  {
-    "from": "Bob",
-    "to": "Charlie",
-    "relation": "parent"
-  },
-  {
-    "from": "Eve",
-    "to": "Alice",
-    "relation": "parent"
-  },
-  {
-    "from": "Doe",
-    "to": "vrce",
-    "relation": "child"
-  },
-  {
-    "from": "Doe",
-    "to": "bvteaxz",
-    "relation": "parent"
-  },
-  {
-    "to": "rayan,e",
-    "relation": "child"
-  },
-  {
-    "to": "alban",
-    "relation": "parent"
-  },
-  {
     "from": "Doe",
     "to": "Alban",
+    "relation": "child"
+  },
+  {
+    "from": "Doe",
+    "to": "vféced",
+    "relation": "child"
+  },
+  {
+    "from": "Doe",
+    "to": "qsd",
+    "relation": "child"
+  },
+  {
+    "from": "Doe",
+    "to": "ez",
+    "relation": "child"
+  },
+  {
+    "from": "Doe",
+    "to": "aq",
     "relation": "parent"
+  },
+  {
+    "from": "Doe",
+    "to": "q",
+    "relation": "parent"
+  },
+  {
+    "from": "Doe",
+    "to": "a",
+    "relation": "spouse"
+  },
+  {
+    "from": "Doe",
+    "to": "a",
+    "relation": "spouse"
   }
 ]
