@@ -78,7 +78,7 @@ public class SignUpController {
     @FXML
     private void goHome() throws IOException {
         Main m = new Main();
-        m.changeScene("Home.fxml", 600, 400);
+        m.changeScene("Home.fxml", 800, 600);
     }
 
     @FXML
