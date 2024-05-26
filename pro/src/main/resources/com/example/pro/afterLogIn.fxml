@@ -9,8 +9,10 @@
    <HBox spacing="10">
       <Button onAction="#handleAddChildAction" text="Add Child" />
       <Button onAction="#handleAddParentAction" text="Add Parent" />
+      <Button onAction="#handleAddSpouseAction" text="Add Maried" />
       <Button onAction="#handleEditMemberAction" text="Edit Member" />
       <Button onAction="#handleRemoveMemberAction" text="Remove Member" />
+      <Button onAction="#handleConsultOtherMemberFamilyTree" text="Consult Other Member Family Tree" />
       <Button fx:id="goHome" onAction="#goHome" mnemonicParsing="false" text="Revenir a l'accueil" />
    </HBox>
    <AnchorPane fx:id="familyTreePane" prefHeight="600" prefWidth="800" style="-fx-border-color: gray;">

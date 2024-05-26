@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminController {
@@ -30,6 +31,8 @@ public class AdminController {
     private TableColumn<Person, String> dateOfBirthColumn;
     @FXML
     private Button validateButton;
+    @FXML
+    private Button invalidateButton;
 
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
@@ -50,7 +53,7 @@ public class AdminController {
     private void loadPersonDataFromFile() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            List<Person> persons = objectMapper.readValue(new File("UserValidation.json"), new TypeReference<List<Person>>(){});
+            List<Person> persons = objectMapper.readValue(new File("UserValidation.json"), new TypeReference<List<Person>>() {});
             personData.addAll(persons);
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,6 +62,50 @@ public class AdminController {
 
     @FXML
     private void handleValidate() {
-        // Handle validation logic here
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            // Remove the person from personData and update UserValidation.json
+            personData.remove(selectedPerson);
+            updatePersonDataFile();
+
+            // Add the person to User.json
+            addPersonToFile(selectedPerson, "User.json");
+        }
+    }
+
+    @FXML
+    private void handleInvalidate() {
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            // Remove the person from personData and update UserValidation.json
+            personData.remove(selectedPerson);
+            updatePersonDataFile();
+        }
+    }
+
+    private void updatePersonDataFile() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            objectMapper.writeValue(new File("UserValidation.json"), new ArrayList<>(personData));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addPersonToFile(Person person, String filePath) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File(filePath);
+        try {
+            List<Person> persons;
+            if (file.exists()) {
+                persons = objectMapper.readValue(file, new TypeReference<List<Person>>() {});
+            } else {
+                persons = new ArrayList<>();
+            }
+            persons.add(person);
+            objectMapper.writeValue(file, persons);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
