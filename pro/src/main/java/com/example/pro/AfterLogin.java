@@ -147,7 +147,7 @@ public class AfterLogin{
     @FXML
     private void goHome(ActionEvent event) throws IOException {
         Main mainApp = new Main();
-        mainApp.changeScene("Home.fxml", 600, 400);
+        mainApp.changeScene("Home.fxml", 800, 600);
     }
 
     @FXML
