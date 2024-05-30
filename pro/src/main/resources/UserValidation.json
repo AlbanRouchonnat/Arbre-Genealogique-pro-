@@ -54,11 +54,6 @@
     "dateOfBirth": "test"
   },
   {
-    "from": "Doe",
-    "to": "hy(\"tg'fr",
-    "relation": "child"
-  },
-  {
     "passWord": "az",
     "firstName": "az",
     "nationality": "az",
